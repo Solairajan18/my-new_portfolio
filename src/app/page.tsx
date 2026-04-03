@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import PhilosophyQuote from "@/components/PhilosophyQuote";
 import Projects from "@/components/Projects";
 import WeekendProjects from "@/components/WeekendProjects";
 import Certifications from "@/components/Certifications";
@@ -10,6 +11,7 @@ export default function Home() {
     <>
       <main>
         <Hero />
+        <PhilosophyQuote />
         <Projects />
         <WeekendProjects />
         <Certifications />
