@@ -1,0 +1,295 @@
+/* ===================== HERO SECTION ===================== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Two-column wrapper */
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1100px;
+  width: 100%;
+  z-index: 2;
+}
+
+/* ---- LEFT SIDE ---- */
+.textSide {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.greeting {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin: 0;
+}
+
+.name {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-color) 60%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Typed role row */
+.roleRow {
+  display: flex;
+  align-items: center;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-height: 2.2rem;
+}
+
+.roleStatic {
+  color: var(--text-secondary);
+}
+
+.roleTyped {
+  color: var(--accent-color);
+  font-weight: 700;
+}
+
+.cursor {
+  display: inline-block;
+  animation: blink 0.75s step-end infinite;
+  color: var(--accent-color);
+  font-weight: 300;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  max-width: 540px;
+  margin: 0.25rem 0;
+}
+
+/* ---- Skills chips ---- */
+.skillsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.25rem 0;
+}
+
+.skillChip {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  background: var(--accent-light);
+  border: 1px solid var(--accent-color);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  transition: all 0.2s ease;
+}
+
+.skillChip:hover {
+  background: var(--accent-color);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.ctaGroup {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.socials {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+}
+
+.socialLink:hover {
+  background: var(--accent-light);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  transform: translateY(-3px);
+}
+
+/* ---- RIGHT SIDE — Profile Photo ---- */
+.photoSide {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.photoRing {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, var(--accent-color), #a855f7);
+  box-shadow: 0 0 40px rgba(var(--accent-color-rgb, 99,102,241), 0.35);
+}
+
+.photoInner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  background: var(--card-bg);
+}
+
+/* Floating badge pills */
+.floatBadge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  white-space: nowrap;
+}
+
+.floatBadgeLeft {
+  bottom: 30px;
+  left: -30px;
+}
+
+.floatBadgeRight {
+  top: 20px;
+  right: -30px;
+}
+
+.floatEmoji {
+  font-size: 1rem;
+}
+
+/* ---- Background blobs ---- */
+.blob1, .blob2 {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(90px);
+  z-index: 1;
+  opacity: 0.12;
+}
+
+.blob1 {
+  background: var(--accent-color);
+  top: -100px;
+  left: -150px;
+  animation: float 20s infinite ease-in-out alternate;
+}
+
+.blob2 {
+  background: #a855f7;
+  bottom: -150px;
+  right: -100px;
+  animation: float 25s infinite ease-in-out alternate-reverse;
+}
+
+@keyframes float {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(30px, 20px) scale(1.05); }
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 800px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2.5rem;
+  }
+
+  /* Move photo above text on mobile */
+  .photoSide {
+    order: -1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .photoRing {
+    width: 200px;
+    height: 200px;
+  }
+
+  .floatBadgeLeft {
+    left: -10px;
+    bottom: -10px;
+  }
+
+  .floatBadgeRight {
+    right: -10px;
+    top: -10px;
+  }
+
+  .subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ctaGroup {
+    justify-content: center;
+  }
+
+  .socials {
+    justify-content: center;
+  }
+
+  .roleRow {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ctaGroup {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ctaGroup > * {
+    width: 100%;
+    justify-content: center;
+  }
+}
