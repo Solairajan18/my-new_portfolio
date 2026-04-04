@@ -42,9 +42,19 @@ export default function Chatbot() {
     setIsLoading(true);
 
     try {
-      const res = await fetch("https://flask-hello-world-six-murex-51.vercel.app/", {
+      const apiUrl = process.env.NEXT_PUBLIC_CHATBOT_API_URL;
+      const apiKey = process.env.NEXT_PUBLIC_CHATBOT_API_KEY;
+
+      if (!apiUrl) {
+        throw new Error("Chatbot API URL is not configured.");
+      }
+
+      const res = await fetch(apiUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "x-api-key": apiKey || "" 
+        },
         body: JSON.stringify({ message: input })
       });
 
