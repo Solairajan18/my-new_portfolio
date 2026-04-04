@@ -82,6 +82,17 @@ export default function Chatbot() {
     }
   };
 
+  const renderContent = (content: string) => {
+    // Simple bolding handler for **text**
+    const parts = content.split(/(\*\*.*?\*\*)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return <strong key={i}>{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
+  };
+
   return (
     <div className={styles.container}>
       <AnimatePresence>
@@ -109,7 +120,7 @@ export default function Chatbot() {
                   key={m.id} 
                   className={`${styles.message} ${m.role === "user" ? styles.userMessage : styles.botMessage}`}
                 >
-                  {m.content}
+                  {renderContent(m.content)}
                 </div>
               ))}
               

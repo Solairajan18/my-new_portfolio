@@ -184,12 +184,24 @@
 }
 
 @media (max-width: 480px) {
-  .chatWindow {
-    position: fixed;
+  .container {
     bottom: 0;
     right: 0;
-    width: 100vw;
-    height: 100vh;
+  }
+
+  .fab {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .chatWindow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100dvh; /* Dynamic viewport height handles mobile bars correctly */
     border-radius: 0;
     z-index: 200;
   }
