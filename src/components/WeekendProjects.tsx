@@ -14,7 +14,7 @@ const miniProjects = [
   {
     id: 2,
     title: "Sol AI",
-    description: "A AI based Chatbot using LLM and Vector DB for my portfolio website it will answer about me in natural language.",
+    description: "An AI-based Chatbot using LLM and Vector DB for my portfolio website; it will answer questions about me in natural language.",
     link: "#",
   },
   {

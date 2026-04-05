@@ -152,7 +152,7 @@ export default function Hero() {
             transition={{ delay: 0.9 }}
           >
             <span className={styles.floatEmoji}>⚡</span>
-            <span>5+ Yrs Exp</span>
+            <span>5+ Years Experience</span>
           </motion.div>
         </motion.div>
       </div>

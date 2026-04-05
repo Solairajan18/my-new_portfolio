@@ -18,6 +18,7 @@ export default function Chatbot() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [suggestions, setSuggestions] = useState<string[]>(["Experience?", "Projects?", "Skills?", "Certifications?", "Contact?"]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const toggleChat = () => setIsOpen(!isOpen);
@@ -32,13 +33,15 @@ export default function Chatbot() {
     }
   }, [messages, isOpen, isLoading]);
 
-  const handleSend = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
+  const handleSend = async (e?: React.FormEvent, text?: string) => {
+    if (e) e.preventDefault();
+    const messageText = text || input;
+    if (!messageText.trim() || isLoading) return;
 
-    const userMessage: Message = { id: Date.now().toString(), role: "user", content: input };
+    const userMessage: Message = { id: Date.now().toString(), role: "user", content: messageText };
     setMessages(prev => [...prev, userMessage]);
     setInput("");
+    setSuggestions([]); // Clear suggestions while loading
     setIsLoading(true);
 
     try {
@@ -55,14 +58,12 @@ export default function Chatbot() {
           "Content-Type": "application/json",
           "x-api-key": apiKey || "" 
         },
-        body: JSON.stringify({ message: input })
+        body: JSON.stringify({ message: messageText })
       });
 
       if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
 
       const data = await res.json();
-
-      // Support both { reply: "..." } and { message: "..." } response shapes
       const replyText = data.reply ?? data.message ?? data.response ?? "I didn't get a response, please try again.";
 
       setMessages(prev => [...prev, {
@@ -70,6 +71,9 @@ export default function Chatbot() {
         role: "assistant",
         content: replyText
       }]);
+
+      // Add follow-up suggestions
+      setSuggestions(["Projects?", "Certifications?", "Contact?", "Skills?"]);
     } catch (error) {
       console.error("Chat error:", error);
       setMessages(prev => [...prev, {
@@ -83,11 +87,21 @@ export default function Chatbot() {
   };
 
   const renderContent = (content: string) => {
-    // Simple bolding handler for **text**
-    const parts = content.split(/(\*\*.*?\*\*)/g);
+    // Regex for URLs and Emails
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g;
+    
+    const parts = content.split(/(\*\*.*?\*\*|https?:\/\/[^\s]+|[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g);
+    
     return parts.map((part, i) => {
       if (part.startsWith("**") && part.endsWith("**")) {
         return <strong key={i}>{part.slice(2, -2)}</strong>;
+      }
+      if (part.match(urlRegex)) {
+        return <a key={i} href={part} target="_blank" rel="noopener noreferrer">{part}</a>;
+      }
+      if (part.match(emailRegex)) {
+        return <a key={i} href={`mailto:${part}`}>{part}</a>;
       }
       return part;
     });
@@ -134,6 +148,23 @@ export default function Chatbot() {
               <div ref={messagesEndRef} />
             </div>
 
+            {suggestions.length > 0 && (
+              <div className={styles.suggestionsContainer}>
+                {suggestions.map((suggestion, i) => (
+                  <motion.button
+                    key={i}
+                    className={styles.suggestionChip}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: i * 0.05 }}
+                    onClick={() => handleSend(undefined, suggestion)}
+                  >
+                    {suggestion}
+                  </motion.button>
+                ))}
+              </div>
+            )}
+
             <form onSubmit={handleSend} className={styles.inputArea}>
               <input 
                 type="text" 
@@ -147,6 +178,9 @@ export default function Chatbot() {
                 <Send size={16} />
               </button>
             </form>
+            <div className={styles.footer}>
+              Powered by <span>SolAI</span>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
