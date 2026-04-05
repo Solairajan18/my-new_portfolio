@@ -40,11 +40,10 @@ export default function Certifications() {
               <Image
                 src={cert.image}
                 alt={cert.name}
-                width={85}
-                height={85}
+                width={110}
+                height={110}
                 className={styles.certImage}
               />
-              <div className={styles.name}>{cert.name}</div>
             </motion.a>
           );
         })}
