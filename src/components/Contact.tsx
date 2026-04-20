@@ -25,7 +25,7 @@ export default function Contact() {
     if (!name || name.trim() === "") newErrors.name = "Please enter your name";
     if (!email || email.trim() === "") {
       newErrors.email = "Please enter your email";
-    } else if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       newErrors.email = "Please enter a valid email address";
     }
     if (!subject || subject.trim() === "") newErrors.subject = "Please enter a subject";
