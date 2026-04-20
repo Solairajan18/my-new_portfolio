@@ -87,11 +87,11 @@ export default function Chatbot() {
   };
 
   const renderContent = (content: string) => {
-    // Regex for URLs and Emails
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g;
+    // Regex for URLs and Emails (refined to exclude trailing punctuation)
+    const urlRegex = /(https?:\/\/[^\s]+?)(?=[.,?!]?(?:\s|$))/g;
+    const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+?)(?=[.,?!]?(?:\s|$))/g;
     
-    const parts = content.split(/(\*\*.*?\*\*|https?:\/\/[^\s]+|[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g);
+    const parts = content.split(/(\*\*.*?\*\*|(?:https?:\/\/[^\s]+?|[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+?)(?=[.,?!]?(?:\s|$)))/g);
     
     return parts.map((part, i) => {
       if (part.startsWith("**") && part.endsWith("**")) {
